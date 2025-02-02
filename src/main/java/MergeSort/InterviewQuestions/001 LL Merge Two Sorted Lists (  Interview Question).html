@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Assignment</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p, ul, ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .code-snippet {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .code-block {
+        background-color: #fff;
+        color: #b4690e;
+        font-size: 90%;
+      }
+      .black-block {
+        color: #000000;
+      }
+      .italic-text {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <h1 id="coding-title"></h1>
+    <div>
+      <h2>Instructions</h2>
+      <div id="coding-instructions"></div>
+    </div>
+    <div>
+      <h2>Test(s)</h2>
+      <div id="coding-tests"></div>
+    </div>
+    <div>
+      <h2>Solution(s)</h2>
+      <div id="coding-solutions"></div>
+    </div>
+
+    <script>
+      const quizData = {"title": "001 LL Merge Two Sorted Lists (  Interview Question)", "hasInstructions": true, "hasTests": true, "hasSolutions": true, "instructions": "<p><strong>Description</strong></p><p>The <code><strong>merge</strong></code> method takes in another <code><strong>LinkedList</strong></code> as an input and merges it with the current <code><strong>LinkedList</strong></code>. The elements in both lists are assumed to be in ascending order, but the input lists themselves do not need to be sorted.</p><p><br></p><p><strong>Parameters</strong></p><ul><li><p><code><strong>otherList</strong></code>: the other <code><strong>LinkedList</strong></code> to merge with the current list</p></li></ul><p><br></p><p><strong>Return Value</strong></p><p>This method does not return a value, but it modifies the current <code><strong>LinkedList</strong></code> to contain the merged list.</p><p><br></p><p><strong>Method signature:</strong></p><p><code><strong>public void merge(LinkedList otherList)</strong></code></p><p><br></p><p><strong>Example:</strong></p><p><br></p><pre class=\"prettyprint linenums\">LinkedList l1 = new LinkedList(1);\nl1.append(3);\nl1.append(5);\nl1.append(7);\n\nLinkedList l2 = new LinkedList(2);\nl2.append(4);\nl2.append(6);\nl2.append(8);\n\nl1.merge(l2);\n\n// The current list (l1) now contains the merged list [1, 2, 3, 4, 5, 6, 7, 8]\n</pre><p><br></p><p><strong>Details</strong></p><p>The <code><strong>merge</strong></code> method works as follows:</p><ol><li><p>It gets the head node of the other linked list (<code><strong>otherList.getHead()</strong></code>) and sets it to a local variable called <code><strong>otherHead</strong></code>.</p></li><li><p>It creates a new node called <code><strong>dummy</strong></code> with a value of 0, which will serve as the head of the merged linked list.</p></li><li><p>It creates a new node called <code><strong>current</strong></code> and sets it equal to <code><strong>dummy</strong></code>, which we will use to traverse the merged linked list.</p></li><li><p>It iterates through both input linked lists as long as they are not null, appending the smaller node to the merged list and updating the head of that list to its next node.</p></li><li><p>It updates the <code><strong>current</strong></code> node to be the last node in the merged list.</p></li><li><p>If either of the input lists still has nodes, it appends them to the end of the merged list.</p></li><li><p>It updates the head of the current list to be the second node in the merged list (since the first node is the dummy node).</p></li><li><p>It updates the length of the current list to reflect the merged list.</p></li></ol><p><br></p><p><strong>Notes</strong></p><ul><li><p>This method assumes that both the current list and the other list contain elements in ascending order. If this is not the case, the merged list may not be in ascending order.</p></li><li><p>This method modifies the current list to contain the merged list. If you want to keep the original lists unchanged, you should create a copy of one or both of the lists before calling this method.</p></li><li><p>This method assumes that the <code><strong>Node</strong></code> class has a <code><strong>getHead</strong></code> method that returns the head node of the linked list, and that the <code><strong>LinkedList</strong></code> class has <code><strong>append</strong></code>, <code><strong>getLength</strong></code>, and <code><strong>printList</strong></code> methods. You may need to modify the implementation depending on the methods available in your classes.</p></li></ul><p><br></p><p><br></p><p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-05-04_15-46-16-067434e2a8a7857d78334e3e84f76588.png\"></p><p><br></p><p><br></p>", "tests": [{"file_name": "Evaluate.java", "content": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.assertEquals;\nimport com.udemy.ucp.IOHelper;\nimport org.junit.jupiter.api.BeforeEach;\n\n\n\npublic class Evaluate {\n    @BeforeEach\n    public void runMain() {\n        Main.main(new String[0]);\n    }\n    \n    // Helper to convert linked list to string for easier comparison\n    public static String listToString(LinkedList list) {\n        StringBuilder sb = new StringBuilder();\n        LinkedList.Node current = list.getHead();\n        // Check if list is empty\n        if (current == null) {\n            return \"empty\";\n        }\n        // Loop through the list\n        while (current != null) {\n            sb.append(current.value);\n            if (current.next != null) {\n                sb.append(\" -> \");\n            }\n            current = current.next;\n        }\n        return sb.toString();\n    }\n\n    // Test: Merge two empty lists\n    @Test\n    public void testMergeEmptyLists() {\n        LinkedList list1 = new LinkedList(0);\n        list1.makeEmpty();\n        LinkedList list2 = new LinkedList(0);\n        list2.makeEmpty();\n        list1.merge(list2);\n        assertEquals(\"empty\", listToString(list1));\n    }\n\n    // Test: Merge with one empty list\n    @Test\n    public void testMergeOneEmptyList() {\n        LinkedList list1 = new LinkedList(1);\n        LinkedList list2 = new LinkedList(0);\n        list2.makeEmpty();\n        list1.merge(list2);\n        assertEquals(\"1\", listToString(list1));\n    }\n\n    // Test: Merge two single-element lists\n    @Test\n    public void testMergeSingleElementLists() {\n        LinkedList list1 = new LinkedList(1);\n        LinkedList list2 = new LinkedList(2);\n        list1.merge(list2);\n        assertEquals(\"1 -> 2\", listToString(list1));\n    }\n\n    // Test: Merge two sorted lists\n    @Test\n    public void testMergeListsWithMultipleNodes() {\n        LinkedList list1 = new LinkedList(1);\n        list1.append(3);\n        list1.append(5);\n        LinkedList list2 = new LinkedList(2);\n        list2.append(4);\n        list2.append(6);\n        list1.merge(list2);\n        assertEquals(\"1 -> 2 -> 3 -> 4 -> 5 -> 6\", listToString(list1));\n    }\n    \n}\n\n"}], "solutions": [{"file_name": "LinkedList.java", "content": "public class LinkedList {\n\n    private Node head;\n    private Node tail;\n    private int length;\n\n    class Node {\n        int value;\n        Node next;\n\n        Node(int value) {\n            this.value = value;\n        }\n    }\n\n    public LinkedList(int value) {\n        Node newNode = new Node(value);\n        head = newNode;\n        tail = newNode;\n        length = 1;\n    }\n\n    public Node getHead() {\n        return head;\n    }\n\n    public Node getTail() {\n        return tail;\n    }\n\n    public int getLength() {\n        return length;\n    }\n    \n    public void makeEmpty() {\n        head = null;\n        tail = null;\n        length = 0;\n    }\n\n    public void printList() {\n        Node temp = head;\n        while (temp != null) {\n            System.out.println(temp.value);\n            temp = temp.next;\n        }\n    }\n    \n    public void printAll() {\n        if (length == 0) {\n            System.out.println(\"Head: null\");\n            System.out.println(\"Tail: null\");\n        } else {\n            System.out.println(\"Head: \" + head.value);\n            System.out.println(\"Tail: \" + tail.value);\n        }\n        System.out.println(\"Length:\" + length);\n        System.out.println(\"\\nLinked List:\");\n        if (length == 0) {\n            System.out.println(\"empty\");\n        } else {\n            printList();\n        }\n    }\n\n    public void append(int value) {\n        Node newNode = new Node(value);\n        if (length == 0) {\n            head = newNode;\n            tail = newNode;\n        } else {\n            tail.next = newNode;\n            tail = newNode;\n        }\n        length++;\n    }\n\n\n    public void merge(LinkedList otherList) {\n        Node otherHead = otherList.getHead();\n        Node dummy = new Node(0);\n        Node current = dummy;\n\n        while (head != null && otherHead != null) {\n            if (head.value < otherHead.value) {\n                current.next = head;\n                head = head.next;\n            } else {\n                current.next = otherHead;\n                otherHead = otherHead.next;\n            }\n            current = current.next;\n        }\n\n        if (head != null) {\n            current.next = head;\n        } else {\n            current.next = otherHead;\n            tail = otherList.getTail();\n        }\n\n        head = dummy.next;\n        length += otherList.getLength();\n    }\n\n}\n\n"}, {"file_name": "Main.java", "content": "public class Main {\n\n    public static void main(String[] args) {\n\n        LinkedList l1 = new LinkedList(1);\n        l1.append(3);\n        l1.append(5);\n        l1.append(7);\n        \n        LinkedList l2 = new LinkedList(2);\n        l2.append(4);\n        l2.append(6);\n        l2.append(8);\n        \n        l1.merge(l2);\n\n        l1.printAll();\n\n    }\n\n}"}]};
+
+      function renderCodeList(rootElement, codeList, className, titlePrefix) {
+        for (var i = 0; i < codeList.length; i++) {
+          var elem = codeList[i];
+          var jsElem = document.createElement("div");
+          jsElem.className = className;
+          var jsElemTitle = document.createElement("h3");
+          jsElemTitle.innerHTML = titlePrefix + " " + (i + 1);
+          var jsElemBody = document.createElement("code");
+          jsElemBody.className = "code-block black-block";
+          jsElemBody.innerHTML = "<pre>" + elem.content + "</pre>";
+          jsElem.appendChild(jsElemTitle);
+          jsElem.appendChild(jsElemBody);
+          rootElement.appendChild(jsElem);
+        }
+      }
+      
+      function main() {
+        // display the assignment
+        var codingTitle = document.getElementById("coding-title");
+        codingTitle.innerHTML = quizData.title;
+        
+        var codingInstructions = document.getElementById("coding-instructions");
+        if (quizData.hasInstructions) {
+          codingInstructions.innerHTML = quizData.instructions;
+        } else {
+          codingInstructions.innerHTML = "<span class=\"italic-text\">" + quizData.instructions
+            + "</span>";
+        }
+
+        // display the test(s)
+        var codingTests = document.getElementById("coding-tests");
+        if (!quizData.hasTests) {
+          codingTests.innerHTML = "<span class=\"italic-text\">" + quizData.tests + "</span>";
+        } else {
+          renderCodeList(codingTests, quizData.tests, "coding-test", "Test");
+        }
+        
+
+        // display the solution(s)
+        var codingSolutions = document.getElementById("coding-solutions");
+        if (!quizData.hasSolutions) {
+          codingSolutions.innerHTML = "<span class=\"italic-text\">" + quizData.solutions + "</span>";
+        } else {
+          renderCodeList(codingSolutions, quizData.solutions, "coding-solution", "Solution");
+        }
+      }
+    </script>
+  </body>
+</html>
