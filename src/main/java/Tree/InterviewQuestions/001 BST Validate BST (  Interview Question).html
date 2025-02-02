@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Assignment</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p, ul, ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .code-snippet {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .code-block {
+        background-color: #fff;
+        color: #b4690e;
+        font-size: 90%;
+      }
+      .black-block {
+        color: #000000;
+      }
+      .italic-text {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <h1 id="coding-title"></h1>
+    <div>
+      <h2>Instructions</h2>
+      <div id="coding-instructions"></div>
+    </div>
+    <div>
+      <h2>Test(s)</h2>
+      <div id="coding-tests"></div>
+    </div>
+    <div>
+      <h2>Solution(s)</h2>
+      <div id="coding-solutions"></div>
+    </div>
+
+    <script>
+      const quizData = {"title": "001 BST Validate BST (  Interview Question)", "hasInstructions": true, "hasTests": true, "hasSolutions": true, "instructions": "<p><strong>Objective:</strong></p><p>Implement a method to validate whether a given binary tree is a correctly formed Binary Search Tree (BST).</p><p><br></p><p><strong>Function Signature:</strong></p><p><code><strong>public boolean isValidBST()</strong></code></p><p><br></p><p><strong>Input:</strong></p><ul><li><p>The method does not take any parameters directly; instead, it operates on the binary tree structure encapsulated within the class it is a part of. </p></li></ul><p><br></p><p><strong>Output:</strong></p><ul><li><p>Returns <code><strong>true</strong></code> if the binary tree is a valid BST, according to BST properties.</p></li><li><p>Returns <code><strong>false</strong></code> if the binary tree violates BST properties.</p></li></ul><p><br></p><p><strong>BST Properties:</strong></p><p>A binary tree is considered a valid BST if, for every node in the tree, all of the following conditions hold:</p><ol><li><p>The left subtree of a node contains only nodes with keys <strong>less than</strong> the node's key.</p></li><li><p>The right subtree of a node contains only nodes with keys <strong>greater than</strong> the node's key.</p></li><li><p>Both the left and right subtrees must also be binary search trees.</p></li></ol><p><br></p><p><strong>Method Description:</strong></p><ol><li><p><strong>In-Order Traversal:</strong></p><ul><li><p>The method begins by performing an in-order traversal of the tree (<code><strong>DFSInOrder</strong></code> method is provided). This process visits nodes in the left subtree, then the root node, and finally nodes in the right subtree.</p></li><li><p>The result of this traversal is stored in an <code><strong>ArrayList&lt;Integer&gt;</strong></code>, capturing the values of the nodes in the order they were visited.</p></li></ul></li><li><p><strong>Validation:</strong></p><ul><li><p>The method iterates through the list of node values starting from the second element. It compares each element with its predecessor to ensure that the sequence of node values is in strict ascending order, which is a direct implication of the BST properties.</p></li><li><p>If at any point, a node value is found to be less than or equal to the value of its predecessor, it indicates a violation of BST properties, and the method returns <code><strong>false</strong></code>.</p></li></ul></li><li><p><strong>Conclusion:</strong></p><ul><li><p>If the entire list is iterated without finding any violations, the method concludes that the tree satisfies all BST properties and returns <code><strong>true</strong></code>, indicating the tree is a valid BST.</p></li></ul></li></ol><p><br></p><p><strong>Use Case:</strong></p><p>This method is particularly useful in scenarios where the integrity of the BST needs to be assured, such as before performing operations that require the BST property to be maintained for efficiency or correctness, including search, insertion, deletion, and data analysis operations.</p><p><br></p><p><br></p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2024-02-10_16-31-09-bab5faabb0fe4cb5d12f8e83fd377485.png\"><p><br></p><p><br></p>", "tests": [{"file_name": "Evaluate.java", "content": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\nimport org.junit.jupiter.api.BeforeEach;\nimport com.udemy.ucp.*;\n\nimport java.util.*;\n\n\npublic class Evaluate {      \n   \n    @BeforeEach\n    public void runMain() {\n        Main.main(new String[0]);\n    }\n\n\n    @Test\n    void testSingleNodeTree() {\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.insert(10);\n        assertTrue(bst.isValidBST(), \"A single-node tree should be a valid BST.\");\n    }\n\n    @Test\n    void testValidBST() {\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.insert(10);\n        bst.insert(5);\n        bst.insert(15);\n        assertTrue(bst.isValidBST(), \"The tree is a valid BST.\");\n    }\n\n    @Test\n    void testValidBSTWithMultipleLevels() {\n        BinarySearchTree bst = new BinarySearchTree();\n        int[] values = {10, 5, 15, 2, 7, 12, 18, 1, 3, 6, 8, 11, 13, 17, 20};\n        for (int value : values) {\n            bst.insert(value);\n        }\n        assertTrue(bst.isValidBST(), \"A correctly structured multi-level tree should be valid.\");\n    }\n    @Test\n    void testBSTWithDeepLeftSubtree() {\n        BinarySearchTree bst = new BinarySearchTree();\n        // Inserting values to create a deep left subtree\n        bst.insert(10);\n        bst.insert(8);\n        bst.insert(6);\n        bst.insert(4);\n        bst.insert(2);\n        assertTrue(bst.isValidBST(), \"A BST with a deep left subtree should be valid.\");\n    }\n\n    @Test\n    void testBSTWithDeepRightSubtree() {\n        BinarySearchTree bst = new BinarySearchTree();\n        // Inserting values to create a deep right subtree\n        bst.insert(10);\n        bst.insert(12);\n        bst.insert(14);\n        bst.insert(16);\n        bst.insert(18);\n        assertTrue(bst.isValidBST(), \"A BST with a deep right subtree should be valid.\");\n    }\n\n    @Test\n    void testBalancedBST() {\n        BinarySearchTree bst = new BinarySearchTree();\n        // Inserting values to create a balanced tree\n        bst.insert(10);\n        bst.insert(5);\n        bst.insert(15);\n        bst.insert(2);\n        bst.insert(7);\n        bst.insert(12);\n        bst.insert(18);\n        assertTrue(bst.isValidBST(), \"A balanced BST should be valid.\");\n    }\n    \n}\n\n"}], "solutions": [{"file_name": "BinarySearchTree.java", "content": "import java.util.ArrayList;\nimport java.util.LinkedList;\n\n\npublic class BinarySearchTree {\n\n    public Node root;\n\n    public static class Node {\n        public int value;\n        public Node left;\n        public Node right;\n\n        private Node(int value) {\n            this.value = value;\n        }\n    }\n\n\tpublic Node getRoot() {\n        return root;\n    }\n\n    public boolean insert(int value) {\n        Node newNode = new Node(value);\n        if (root == null) {\n            root = newNode;\n            return true;\n        }\n        Node temp = root;\n        while (true) {\n            if (newNode.value == temp.value) return false;\n            if (newNode.value < temp.value) {\n                if (temp.left == null) {\n                    temp.left = newNode;\n                    return true;\n                }\n                temp = temp.left;\n            } else {\n                if (temp.right == null) {\n                    temp.right = newNode;\n                    return true;\n                }\n                temp = temp.right;\n            }\n        }\n    }\n\n    public ArrayList<Integer> DFSInOrder() {\n        ArrayList<Integer> results = new ArrayList<>();\n\n        class Traverse {\n            Traverse(Node currentNode) {\n                if (currentNode.left != null) {\n                    new Traverse(currentNode.left);\n                }\n                results.add(currentNode.value);\n                if (currentNode.right != null) {\n                    new Traverse(currentNode.right);\n                }\n            }\n        }\n        \n        new Traverse(root);\n        return results;\n    }\n    \n    public boolean isValidBST() {\n        ArrayList<Integer> nodeValues = DFSInOrder();\n        for (int i = 1; i < nodeValues.size(); i++) {\n            if (nodeValues.get(i) <= nodeValues.get(i - 1)) {\n                return false; // Not in ascending order\n            }\n        }\n        return true;\n    }\n\n}"}, {"file_name": "Main.java", "content": "public class Main {\n    \n    public static void main(String[] args) {\n        testSingleNodeTree();\n        testValidBST();\n        testValidBSTWithDeepLeftSubtree();\n        testValidBSTWithDeepRightSubtree();\n        testBalancedBST();\n    }\n\n    private static void testSingleNodeTree() {\n        System.out.println(\"\\n----- Test: Single Node Tree -----\\n\");\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.insert(10);\n        printIsValidBST(bst);\n    }\n\n    private static void testValidBST() {\n        System.out.println(\"\\n----- Test: Valid BST -----\\n\");\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.insert(10);\n        bst.insert(5);\n        bst.insert(15);\n        printIsValidBST(bst);\n    }\n\n    private static void testValidBSTWithDeepLeftSubtree() {\n        System.out.println(\"\\n----- Test: BST With Deep Left Subtree -----\\n\");\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.insert(10);\n        bst.insert(8);\n        bst.insert(6);\n        bst.insert(4);\n        bst.insert(2);\n        printIsValidBST(bst);\n    }\n\n    private static void testValidBSTWithDeepRightSubtree() {\n        System.out.println(\"\\n----- Test: BST With Deep Right Subtree -----\\n\");\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.insert(10);\n        bst.insert(12);\n        bst.insert(14);\n        bst.insert(16);\n        bst.insert(18);\n        printIsValidBST(bst);\n    }\n\n    private static void testBalancedBST() {\n        System.out.println(\"\\n----- Test: Balanced BST -----\\n\");\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.insert(10);\n        bst.insert(5);\n        bst.insert(15);\n        bst.insert(2);\n        bst.insert(7);\n        bst.insert(12);\n        bst.insert(18);\n        printIsValidBST(bst);\n    }\n\n    private static void printIsValidBST(BinarySearchTree bst) {\n        System.out.println(\"Is valid BST: \" + bst.isValidBST());\n    }\n    \n}\n\n"}]};
+
+      function renderCodeList(rootElement, codeList, className, titlePrefix) {
+        for (var i = 0; i < codeList.length; i++) {
+          var elem = codeList[i];
+          var jsElem = document.createElement("div");
+          jsElem.className = className;
+          var jsElemTitle = document.createElement("h3");
+          jsElemTitle.innerHTML = titlePrefix + " " + (i + 1);
+          var jsElemBody = document.createElement("code");
+          jsElemBody.className = "code-block black-block";
+          jsElemBody.innerHTML = "<pre>" + elem.content + "</pre>";
+          jsElem.appendChild(jsElemTitle);
+          jsElem.appendChild(jsElemBody);
+          rootElement.appendChild(jsElem);
+        }
+      }
+      
+      function main() {
+        // display the assignment
+        var codingTitle = document.getElementById("coding-title");
+        codingTitle.innerHTML = quizData.title;
+        
+        var codingInstructions = document.getElementById("coding-instructions");
+        if (quizData.hasInstructions) {
+          codingInstructions.innerHTML = quizData.instructions;
+        } else {
+          codingInstructions.innerHTML = "<span class=\"italic-text\">" + quizData.instructions
+            + "</span>";
+        }
+
+        // display the test(s)
+        var codingTests = document.getElementById("coding-tests");
+        if (!quizData.hasTests) {
+          codingTests.innerHTML = "<span class=\"italic-text\">" + quizData.tests + "</span>";
+        } else {
+          renderCodeList(codingTests, quizData.tests, "coding-test", "Test");
+        }
+        
+
+        // display the solution(s)
+        var codingSolutions = document.getElementById("coding-solutions");
+        if (!quizData.hasSolutions) {
+          codingSolutions.innerHTML = "<span class=\"italic-text\">" + quizData.solutions + "</span>";
+        } else {
+          renderCodeList(codingSolutions, quizData.solutions, "coding-solution", "Solution");
+        }
+      }
+    </script>
+  </body>
+</html>

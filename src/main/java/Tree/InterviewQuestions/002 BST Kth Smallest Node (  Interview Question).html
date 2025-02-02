@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Assignment</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p, ul, ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .code-snippet {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .code-block {
+        background-color: #fff;
+        color: #b4690e;
+        font-size: 90%;
+      }
+      .black-block {
+        color: #000000;
+      }
+      .italic-text {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <h1 id="coding-title"></h1>
+    <div>
+      <h2>Instructions</h2>
+      <div id="coding-instructions"></div>
+    </div>
+    <div>
+      <h2>Test(s)</h2>
+      <div id="coding-tests"></div>
+    </div>
+    <div>
+      <h2>Solution(s)</h2>
+      <div id="coding-solutions"></div>
+    </div>
+
+    <script>
+      const quizData = {"title": "002 BST Kth Smallest Node (  Interview Question)", "hasInstructions": true, "hasTests": true, "hasSolutions": true, "instructions": "<p>The <code><strong>kthSmallest(int k)</strong></code> method should find the kth smallest element in the binary search tree. If such an element exists, the method should return its value. If not, it should return <code><strong>null</strong></code>. The smallest element in the tree is the one with the lowest value, the second smallest element is the one with the second lowest value, and so on.<br><br>The method should use the in-order traversal technique to visit the nodes of the tree, i.e., it should first visit the left child, then the parent, and finally the right child. To implement this, use a <code><strong>Stack&lt;Node&gt;</strong></code> to store the nodes. Continue with the traversal as long as there are nodes in the stack or the current node is not null.<br><br>While the current node is not null, push it onto the stack and move to its left child. Then, once the current node is null, pop a node from the stack, decrement <code><strong>k</strong></code> by one, and if <code><strong>k</strong></code> is zero, return the value of the popped node. Finally, move to the right child of the popped node.<br><br><strong>Examples</strong></p><p>For example, if the binary search tree contains the elements [5, 3, 7, 2, 4, 6, 8] and <code><strong>k</strong></code> is 1, the method should return 2 as this is the smallest element. If <code><strong>k</strong></code> is 3, it should return 4, the third smallest element. If <code><strong>k</strong></code> is 6, it should return 7, the sixth smallest element. If <code><strong>k</strong></code> is greater than the number of elements in the tree, the method should return <code><strong>null</strong></code>.<br><br><strong>Constraints</strong></p><p>You can assume the following constraints:</p><ul><li><p>The value of <code><strong>k</strong></code> will be a positive integer, not exceeding the number of elements in the tree.</p></li><li><p>The <code><strong>insert(int value)</strong></code> method will be called at least once before <code><strong>kthSmallest(int k)</strong></code>.</p></li></ul><p><br></p><p><br></p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2024-03-04_16-12-50-d34817571d53b63e3653ba40d05948c4.png\">", "tests": [{"file_name": "Evaluate.java", "content": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\nimport org.junit.jupiter.api.BeforeEach;\n\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\n\npublic class Evaluate {      \n   \n    @BeforeEach\n    public void runMain() {\n        Main.main(new String[0]);\n    }\n    \n    // Test: Tree has one node and k is 1\n    @Test\n    public void testSingleElement() {\n        BinarySearchTree tree = new BinarySearchTree();\n        tree.insert(5);\n        Integer result = tree.kthSmallest(1);\n        assertEquals(5, result);\n    }\n\n    // Test: Tree has multiple nodes and k is in range\n    @Test\n    public void testMultipleNodesInRange() {\n        BinarySearchTree tree = new BinarySearchTree();\n        tree.insert(10);\n        tree.insert(5);\n        tree.insert(15);\n        Integer result = tree.kthSmallest(2);\n        assertEquals(10, result);\n    }\n\n\n    // Test: k is less than 1\n    @Test\n    public void testKLessThanOne() {\n        BinarySearchTree tree = new BinarySearchTree();\n        tree.insert(10);\n        Integer result = tree.kthSmallest(0);\n        assertNull(result);\n    }\n    \n}\n\n"}], "solutions": [{"file_name": "BinarySearchTree.java", "content": "import java.util.Stack;\n\n\npublic class BinarySearchTree {\n\n    private Node root;\n\n    class Node {\n        public int value;\n        public Node left;\n        public Node right;\n\n        Node(int value) {\n            this.value = value;\n        }\n    }\n\n    public boolean insert(int value) {\n        Node newNode = new Node(value);\n        if (root == null) {\n            root = newNode;\n            return true;\n        }\n        Node temp = root;\n        while (true) {\n            if (newNode.value == temp.value) return false;\n            if (newNode.value < temp.value) {\n                if (temp.left == null) {\n                    temp.left = newNode;\n                    return true;\n                }\n                temp = temp.left;\n            } else {\n                if (temp.right == null) {\n                    temp.right = newNode;\n                    return true;\n                }\n                temp = temp.right;\n            }\n        }\n    }\n    \n    public Integer kthSmallest(int k) {\n        Stack<Node> stack = new Stack<>();\n        Node node = this.root;\n\n        while (!stack.isEmpty() || node != null) {\n            while (node != null) {\n                stack.push(node);\n                node = node.left;\n            }\n            node = stack.pop();\n            k -= 1;\n            if (k == 0) {\n                return node.value;\n            }\n            node = node.right;\n        }\n        return null;\n    }\n    \n}\n"}, {"file_name": "Main.java", "content": "public class Main {\n    \n    public static void main(String[] args) {\n        \n        BinarySearchTree bst = new BinarySearchTree();\n\n        bst.insert(5);\n        bst.insert(3);\n        bst.insert(7);\n        bst.insert(2);\n        bst.insert(4);\n        bst.insert(6);\n        bst.insert(8);\n\n        System.out.println(bst.kthSmallest(1));  // Expected output: 2\n        System.out.println(bst.kthSmallest(3));  // Expected output: 4\n        System.out.println(bst.kthSmallest(6));  // Expected output: 7\n        \n    }\n    \n}\n"}]};
+
+      function renderCodeList(rootElement, codeList, className, titlePrefix) {
+        for (var i = 0; i < codeList.length; i++) {
+          var elem = codeList[i];
+          var jsElem = document.createElement("div");
+          jsElem.className = className;
+          var jsElemTitle = document.createElement("h3");
+          jsElemTitle.innerHTML = titlePrefix + " " + (i + 1);
+          var jsElemBody = document.createElement("code");
+          jsElemBody.className = "code-block black-block";
+          jsElemBody.innerHTML = "<pre>" + elem.content + "</pre>";
+          jsElem.appendChild(jsElemTitle);
+          jsElem.appendChild(jsElemBody);
+          rootElement.appendChild(jsElem);
+        }
+      }
+      
+      function main() {
+        // display the assignment
+        var codingTitle = document.getElementById("coding-title");
+        codingTitle.innerHTML = quizData.title;
+        
+        var codingInstructions = document.getElementById("coding-instructions");
+        if (quizData.hasInstructions) {
+          codingInstructions.innerHTML = quizData.instructions;
+        } else {
+          codingInstructions.innerHTML = "<span class=\"italic-text\">" + quizData.instructions
+            + "</span>";
+        }
+
+        // display the test(s)
+        var codingTests = document.getElementById("coding-tests");
+        if (!quizData.hasTests) {
+          codingTests.innerHTML = "<span class=\"italic-text\">" + quizData.tests + "</span>";
+        } else {
+          renderCodeList(codingTests, quizData.tests, "coding-test", "Test");
+        }
+        
+
+        // display the solution(s)
+        var codingSolutions = document.getElementById("coding-solutions");
+        if (!quizData.hasSolutions) {
+          codingSolutions.innerHTML = "<span class=\"italic-text\">" + quizData.solutions + "</span>";
+        } else {
+          renderCodeList(codingSolutions, quizData.solutions, "coding-solution", "Solution");
+        }
+      }
+    </script>
+  </body>
+</html>

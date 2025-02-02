@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Assignment</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p, ul, ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .code-snippet {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .code-block {
+        background-color: #fff;
+        color: #b4690e;
+        font-size: 90%;
+      }
+      .black-block {
+        color: #000000;
+      }
+      .italic-text {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <h1 id="coding-title"></h1>
+    <div>
+      <h2>Instructions</h2>
+      <div id="coding-instructions"></div>
+    </div>
+    <div>
+      <h2>Test(s)</h2>
+      <div id="coding-tests"></div>
+    </div>
+    <div>
+      <h2>Solution(s)</h2>
+      <div id="coding-solutions"></div>
+    </div>
+
+    <script>
+      const quizData = {"title": "004 HT Group Anagrams (  Interview Question)", "hasInstructions": true, "hasTests": true, "hasSolutions": true, "instructions": "<p>You have been given an array of strings, where each string may contain only lowercase English letters. You need to write a method <code><strong>groupAnagrams(String[] strings)</strong></code> that groups the anagrams in the array together using a hash table (<em>HashMap</em>). The method should return a list of lists, where each inner array contains a group of anagrams.<br><br>For example, if the input array is <code><strong>[\"eat\", \"tea\", \"tan\", \"ate\", \"nat\", \"bat\"]</strong></code>, the method should return <code><strong>[[\"eat\",\"tea\",\"ate\"],[\"tan\",\"nat\"],[\"bat\"]]</strong></code> because the first three strings are anagrams of each other, the next two strings are anagrams of each other, and the last string has no anagrams in the input array.<br><br>You need to implement the <code><strong>groupAnagrams(String[] strings)</strong></code> method and return a list of lists, where each inner list contains a group of anagrams according to the above requirements.<br><br>Return type: <code><strong>List&lt;List&lt;String&gt;&gt;</strong></code><strong> </strong></p><p><br></p><p><br></p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-09-25_16-11-17-105a6812ec003c27577ae2bb3eccfb62.png\"><p><br></p>", "tests": [{"file_name": "Evaluate.java", "content": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\nimport org.junit.jupiter.api.BeforeEach;\n\nimport java.util.*;\n\n\npublic class Evaluate {      \n   \n    @BeforeEach\n    public void runMain() {\n        Main.main(new String[0]);\n    }\n   \n     private boolean compareAnagramGroups(List<List<String>> list1, List<List<String>> list2) {\n        if (list1.size() != list2.size()) return false;\n\n        // Sort each sublist\n        for (List<String> sublist1 : list1) {\n            Collections.sort(sublist1);\n        }\n\n        for (List<String> sublist2 : list2) {\n            Collections.sort(sublist2);\n        }\n\n        // Sort the main list based on sublist contents\n        Collections.sort(list1, (a, b) -> a.toString().compareTo(b.toString()));\n        Collections.sort(list2, (a, b) -> a.toString().compareTo(b.toString()));\n\n        return list1.equals(list2);\n    }\n    \n    // Test with empty strings\n    @Test\n    public void testEmptyStrings() {\n        String[] strings = {\"\", \"\", \"\"};\n        List<List<String>> result = Main.groupAnagrams(strings);\n\n        List<List<String>> expected = Arrays.asList(\n            Arrays.asList(\"\", \"\", \"\")\n        );\n\n        assertEquals(expected, result);\n    }\n    \n    // Test with single characters\n    @Test\n    public void testSingleCharacters() {\n        String[] strings = {\"a\", \"b\", \"c\"};\n        List<List<String>> result = Main.groupAnagrams(strings);\n\n        List<List<String>> expected = Arrays.asList(\n            Arrays.asList(\"a\"),\n            Arrays.asList(\"b\"),\n            Arrays.asList(\"c\")\n        );\n\n        assertEquals(expected, result);\n    }\n\n    @Test\n    public void testNormalStrings() {\n        String[] strings = {\"eat\", \"tea\", \"tan\", \"ate\", \"nat\", \"bat\"};\n        List<List<String>> result = Main.groupAnagrams(strings);\n\n        List<List<String>> expected = new ArrayList<>();\n        expected.add(Arrays.asList(\"eat\", \"tea\", \"ate\"));\n        expected.add(Arrays.asList(\"tan\", \"nat\"));\n        expected.add(Arrays.asList(\"bat\"));\n\n        assertTrue(compareAnagramGroups(expected, result));\n    }\n\n    @Test\n    public void testNoAnagrams() {\n        String[] strings = {\"hello\", \"world\", \"java\"};\n        List<List<String>> result = Main.groupAnagrams(strings);\n\n        List<List<String>> expected = new ArrayList<>();\n        expected.add(Arrays.asList(\"hello\"));\n        expected.add(Arrays.asList(\"world\"));\n        expected.add(Arrays.asList(\"java\"));\n\n        assertTrue(compareAnagramGroups(expected, result));\n    }\n\n    @Test\n    public void testMixedCases() {\n        String[] strings = {\"Eat\", \"Tea\", \"ate\", \"taE\"};\n        List<List<String>> result = Main.groupAnagrams(strings);\n\n        List<List<String>> expected = new ArrayList<>();\n        expected.add(Arrays.asList(\"Eat\", \"Tea\", \"taE\"));\n        expected.add(Arrays.asList(\"ate\"));\n\n        assertFalse(compareAnagramGroups(expected, result));\n    }\n    \n}\n\n"}], "solutions": [{"file_name": "Main.java", "content": "import java.util.*;\n\n\npublic class Main {\n    \n    public static List<List<String>> groupAnagrams(String[] strings) {\n        Map<String, List<String>> anagramGroups = new HashMap<>();\n\n        for (String string : strings) {\n            char[] chars = string.toCharArray();\n            Arrays.sort(chars);\n            String canonical = new String(chars);\n\n            if (anagramGroups.containsKey(canonical)) {\n                anagramGroups.get(canonical).add(string);\n            } else {\n                List<String> group = new ArrayList<>();\n                group.add(string);\n                anagramGroups.put(canonical, group);\n            }\n        }\n\n        return new ArrayList<>(anagramGroups.values());\n    }\n    \n\n    public static void main(String[] args) {\n        System.out.println(\"1st set:\");\n        System.out.println(groupAnagrams(new String[]{\"eat\", \"tea\", \"tan\", \"ate\", \"nat\", \"bat\"}));\n\n        System.out.println(\"\\n2nd set:\");\n        System.out.println(groupAnagrams(new String[]{\"abc\", \"cba\", \"bac\", \"foo\", \"bar\"}));\n\n        System.out.println(\"\\n3rd set:\");\n        System.out.println(groupAnagrams(new String[]{\"listen\", \"silent\", \"triangle\", \"integral\", \"garden\", \"ranged\"}));\n\n        /*\n            EXPECTED OUTPUT:\n            ----------------\n            1st set:\n            [[eat, tea, ate], [tan, nat], [bat]]\n\n            2nd set:\n            [[abc, cba, bac], [foo], [bar]]\n\n            3rd set:\n            [[listen, silent], [triangle, integral], [garden, ranged]]\n\n        */\n        \n    }\n    \n}\n"}]};
+
+      function renderCodeList(rootElement, codeList, className, titlePrefix) {
+        for (var i = 0; i < codeList.length; i++) {
+          var elem = codeList[i];
+          var jsElem = document.createElement("div");
+          jsElem.className = className;
+          var jsElemTitle = document.createElement("h3");
+          jsElemTitle.innerHTML = titlePrefix + " " + (i + 1);
+          var jsElemBody = document.createElement("code");
+          jsElemBody.className = "code-block black-block";
+          jsElemBody.innerHTML = "<pre>" + elem.content + "</pre>";
+          jsElem.appendChild(jsElemTitle);
+          jsElem.appendChild(jsElemBody);
+          rootElement.appendChild(jsElem);
+        }
+      }
+      
+      function main() {
+        // display the assignment
+        var codingTitle = document.getElementById("coding-title");
+        codingTitle.innerHTML = quizData.title;
+        
+        var codingInstructions = document.getElementById("coding-instructions");
+        if (quizData.hasInstructions) {
+          codingInstructions.innerHTML = quizData.instructions;
+        } else {
+          codingInstructions.innerHTML = "<span class=\"italic-text\">" + quizData.instructions
+            + "</span>";
+        }
+
+        // display the test(s)
+        var codingTests = document.getElementById("coding-tests");
+        if (!quizData.hasTests) {
+          codingTests.innerHTML = "<span class=\"italic-text\">" + quizData.tests + "</span>";
+        } else {
+          renderCodeList(codingTests, quizData.tests, "coding-test", "Test");
+        }
+        
+
+        // display the solution(s)
+        var codingSolutions = document.getElementById("coding-solutions");
+        if (!quizData.hasSolutions) {
+          codingSolutions.innerHTML = "<span class=\"italic-text\">" + quizData.solutions + "</span>";
+        } else {
+          renderCodeList(codingSolutions, quizData.solutions, "coding-solution", "Solution");
+        }
+      }
+    </script>
+  </body>
+</html>

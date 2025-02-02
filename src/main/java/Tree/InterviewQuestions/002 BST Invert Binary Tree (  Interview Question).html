@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Assignment</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p, ul, ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .code-snippet {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .code-block {
+        background-color: #fff;
+        color: #b4690e;
+        font-size: 90%;
+      }
+      .black-block {
+        color: #000000;
+      }
+      .italic-text {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <h1 id="coding-title"></h1>
+    <div>
+      <h2>Instructions</h2>
+      <div id="coding-instructions"></div>
+    </div>
+    <div>
+      <h2>Test(s)</h2>
+      <div id="coding-tests"></div>
+    </div>
+    <div>
+      <h2>Solution(s)</h2>
+      <div id="coding-solutions"></div>
+    </div>
+
+    <script>
+      const quizData = {"title": "002 BST Invert Binary Tree (  Interview Question)", "hasInstructions": true, "hasTests": true, "hasSolutions": true, "instructions": "<p><strong>Objective:</strong> Write a method to invert (or mirror) a binary tree. This means that for every node in the binary tree, you will swap its left and right children.</p><p><br></p><p><strong>Method Signature:</strong></p><p><code><strong>private Node invertTree(Node node) </strong></code></p><p><br></p><p><strong>Input:</strong></p><ul><li><p><code><strong>node</strong></code>: A <code><strong>Node</strong></code> object representing the root of a binary tree. The <code><strong>Node</strong></code> class has attributes <code><strong>value</strong></code>, <code><strong>left</strong></code>, and <code><strong>right</strong></code>, where <code><strong>value</strong></code> is the value stored in the node, and <code><strong>left</strong></code> and <code><strong>right</strong></code> are pointers to the node's left and right children, respectively.</p></li></ul><p><br></p><p><strong>Output:</strong></p><ul><li><p>The root node of the inverted binary tree.</p></li></ul><p><br></p><p><strong>Requirements:</strong></p><ol><li><p>The method must be recursive. It should work by traversing the tree and swapping the left and right children of every node encountered.</p></li><li><p>If the input tree is empty (i.e., <code><strong>node</strong></code> is <code><strong>null</strong></code>), the method should return <code><strong>null</strong></code>.</p></li><li><p>The inversion should happen in-place, meaning you should not create a new tree but instead modify the existing tree structure.</p></li><li><p>The method should handle binary trees of any size and structure, ensuring that every node's left and right children are swapped.</p></li></ol><p><br></p><p><strong>Example:</strong></p><p>Given a binary tree structured as follows:</p><p><br></p><p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2024-02-07_18-12-05-6b3779ba262156f9ddf0a40c7d7fa588.png\"></p><p><br></p><p>After calling <code><strong>invertTree(Node node)</strong></code>, where <code><strong>root</strong></code> is the node with the value <code><strong>47</strong></code>, the tree should be inverted to look like this:</p><p><br></p><p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2024-02-07_18-12-06-7d63f1b4e6b659e12e95f36fb3907944.png\"></p><p><br></p><p><br></p><p><strong>Note:</strong> This problem requires understanding binary trees, recursion, and the ability to manipulate tree nodes directly. The solution should ensure that every node's left and right children are swapped all the way down the tree, effectively creating a mirror image of the original structure.</p><p><br></p><p><br></p><p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2024-02-07_18-12-06-b71ef9bc1f23b75fc560fc52b8300d93.png\"></p><p><br></p><p><br></p>", "tests": [{"file_name": "Evaluate.java", "content": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\nimport org.junit.jupiter.api.BeforeEach;\n\nimport java.util.*;\n\n\npublic class Evaluate {      \n   \n    @BeforeEach\n    public void runMain() {\n        Main.main(new String[0]);\n    }\n\n    // Test 1: Invert an empty tree\n    @Test\n    void testInvertEmptyTree() {\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.invert();\n        assertNull(bst.getRoot(), \"The root of an inverted empty tree should be null.\");\n    }\n\n    // Test 2: Invert a tree with a single node\n    @Test\n    void testInvertSingleNode() {\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.insert(1);\n        bst.invert();\n        assertEquals(1, bst.getRoot().value, \"The root value should remain unchanged for a single-node tree.\");\n    }\n\n    // Test 3: Invert a tree with only a left child\n    @Test\n    void testInvertTreeWithOnlyLeftChild() {\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.insert(2);\n        bst.insert(1);\n        bst.invert();\n        assertNull(bst.getRoot().left, \"After inverting, left child should be null.\");\n        assertNotNull(bst.getRoot().right, \"After inverting, right child should not be null.\");\n        assertEquals(1, bst.getRoot().right.value, \"The right child should have the value of the original left child.\");\n    }\n\n    // Test 4: Invert a tree with only a right child\n    @Test\n    void testInvertTreeWithOnlyRightChild() {\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.insert(1);\n        bst.insert(2);\n        bst.invert();\n        assertNull(bst.getRoot().right, \"After inverting, right child should be null.\");\n        assertNotNull(bst.getRoot().left, \"After inverting, left child should not be null.\");\n        assertEquals(2, bst.getRoot().left.value, \"The left child should have the value of the original right child.\");\n    }\n\n    // Test 5: Invert a full binary tree\n    @Test\n    void testInvertFullBinaryTree() {\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.insert(2);\n        bst.insert(1);\n        bst.insert(3);\n        bst.invert();\n        assertEquals(3, bst.getRoot().left.value, \"Left child should have the value of the original right child.\");\n        assertEquals(1, bst.getRoot().right.value, \"Right child should have the value of the original left child.\");\n    }\n\n    // Test 6: Invert a more complex binary tree\n    @Test\n    void testInvertComplexBinaryTree() {\n        BinarySearchTree bst = new BinarySearchTree();\n        int[] values = {4, 2, 6, 1, 3, 5, 7};\n        for (int value : values) {\n            bst.insert(value);\n        }\n        bst.invert();\n        assertEquals(4, bst.getRoot().value, \"Root value should remain 4.\");\n        assertEquals(6, bst.getRoot().left.value, \"Left child of root should now be 6.\");\n        assertEquals(2, bst.getRoot().right.value, \"Right child of root should now be 2.\");\n        assertEquals(7, bst.getRoot().left.left.value, \"Left child of node 6 should now be 7.\");\n    }\n\n    // Test 7: Double inversion should return the tree to its original structure\n    @Test\n    void testDoubleInversionReturnsOriginal() {\n        BinarySearchTree bst = new BinarySearchTree();\n        bst.insert(3);\n        bst.insert(1);\n        bst.insert(4);\n        bst.invert();\n        bst.invert(); // Inverting twice should revert to the original structure\n        assertEquals(3, bst.getRoot().value, \"Root should be 3 after double inversion.\");\n        assertEquals(1, bst.getRoot().left.value, \"Left child of root should be 1 after double inversion.\");\n        assertEquals(4, bst.getRoot().right.value, \"Right child of root should be 4 after double inversion.\");\n    }\n    \n}\n\n"}], "solutions": [{"file_name": "BinarySearchTree.java", "content": "import java.util.ArrayList;\nimport java.util.LinkedList;\nimport java.util.Queue;\n\npublic class BinarySearchTree {\n\t\n    private Node root;\n\n    class Node {\n        public int value;\n        public Node left;\n        public Node right;\n\n        Node(int value) {\n            this.value = value;\n        }\n    }\n    \n    public Node getRoot() {\n        return root;\n    }\n\n    private Node insert(Node currentNode, int value) {\n        if (currentNode == null) return new Node(value);\n\n        if (value < currentNode.value) {\n            currentNode.left = insert(currentNode.left, value);\n        } else if (value > currentNode.value) {\n            currentNode.right = insert(currentNode.right, value);\n        }\n        return currentNode;\n    }\n    public void insert(int value) {\n        if (root == null) root = new Node(value);\n        insert(root, value);\n    }   \n    \n    public ArrayList<Integer> BFS() {\n        Node currentNode = root;\n        Queue<Node> queue = new LinkedList<>();\n        ArrayList<Integer> results = new ArrayList<>();\n        if (currentNode != null) {\n            queue.add(currentNode);\n        }\n    \n        while (queue.size() > 0) {\n            currentNode = queue.remove();\n            if (currentNode != null) { \n                results.add(currentNode.value);\n                queue.add(currentNode.left);  \n                queue.add(currentNode.right);\n            }\n        }\n        return results;\n    }\n    \n    public void invert() {\n        root = invertTree(root);\n    }\n    \n    private Node invertTree(Node node) {\n        if (node == null) return null;\n    \n        Node temp = node.left;\n        node.left = invertTree(node.right);\n        node.right = invertTree(temp);\n    \n        return node;\n    }\n    \n}\n\n"}, {"file_name": "Main.java", "content": "import java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.List;\n\npublic class Main {\n\n    private static void performTest(String description, int[] insertValues, Integer[] expectedValues, boolean doubleInversion) {\n        BinarySearchTree bst = new BinarySearchTree();\n        for (int value : insertValues) {\n            bst.insert(value);\n        }\n        if (doubleInversion) {\n            bst.invert(); // First inversion\n        }\n        bst.invert(); // Perform inversion (or second inversion for the specific case)\n\n        ArrayList<Integer> resultList = bst.BFS();\n\n        // Use Arrays.asList for compatibility with older Java versions\n        List<Integer> expectedList = new ArrayList<>(Arrays.asList(expectedValues));\n\n        System.out.println(description + \": \" + (expectedList.equals(resultList) ? \"Pass\" : \"Fail\"));\n        System.out.println(\"Expected: \" + expectedList);\n        System.out.println(\"Actual:   \" + resultList);\n    }\n\n    private static void testInvertBinarySearchTree() {\n        System.out.println(\"--- Testing Inversion of Binary Search Tree ---\");\n\n        performTest(\"Invert an empty tree\", new int[]{}, new Integer[]{}, false);\n        performTest(\"Invert a tree with a single node\", new int[]{1}, new Integer[]{1}, false);\n        performTest(\"Invert a tree with only a left child\", new int[]{2, 1}, new Integer[]{2, null, 1}, false);\n        performTest(\"Invert a tree with only a right child\", new int[]{1, 2}, new Integer[]{1, 2}, false);\n        performTest(\"Invert a full binary tree\", new int[]{2, 1, 3}, new Integer[]{2, 3, 1}, false);\n        performTest(\"Invert a more complex binary tree\", new int[]{4, 2, 6, 1, 3, 5, 7}, new Integer[]{4, 6, 2, 7, 5, 3, 1}, false);\n        performTest(\"Double inversion returns original\", new int[]{3, 1, 4}, new Integer[]{3, 1, 4}, true);\n    }\n\n    public static void main(String[] args) {\n        testInvertBinarySearchTree();\n    }\n    \n}\n\n"}]};
+
+      function renderCodeList(rootElement, codeList, className, titlePrefix) {
+        for (var i = 0; i < codeList.length; i++) {
+          var elem = codeList[i];
+          var jsElem = document.createElement("div");
+          jsElem.className = className;
+          var jsElemTitle = document.createElement("h3");
+          jsElemTitle.innerHTML = titlePrefix + " " + (i + 1);
+          var jsElemBody = document.createElement("code");
+          jsElemBody.className = "code-block black-block";
+          jsElemBody.innerHTML = "<pre>" + elem.content + "</pre>";
+          jsElem.appendChild(jsElemTitle);
+          jsElem.appendChild(jsElemBody);
+          rootElement.appendChild(jsElem);
+        }
+      }
+      
+      function main() {
+        // display the assignment
+        var codingTitle = document.getElementById("coding-title");
+        codingTitle.innerHTML = quizData.title;
+        
+        var codingInstructions = document.getElementById("coding-instructions");
+        if (quizData.hasInstructions) {
+          codingInstructions.innerHTML = quizData.instructions;
+        } else {
+          codingInstructions.innerHTML = "<span class=\"italic-text\">" + quizData.instructions
+            + "</span>";
+        }
+
+        // display the test(s)
+        var codingTests = document.getElementById("coding-tests");
+        if (!quizData.hasTests) {
+          codingTests.innerHTML = "<span class=\"italic-text\">" + quizData.tests + "</span>";
+        } else {
+          renderCodeList(codingTests, quizData.tests, "coding-test", "Test");
+        }
+        
+
+        // display the solution(s)
+        var codingSolutions = document.getElementById("coding-solutions");
+        if (!quizData.hasSolutions) {
+          codingSolutions.innerHTML = "<span class=\"italic-text\">" + quizData.solutions + "</span>";
+        } else {
+          renderCodeList(codingSolutions, quizData.solutions, "coding-solution", "Solution");
+        }
+      }
+    </script>
+  </body>
+</html>

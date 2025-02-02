@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Assignment</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p, ul, ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .code-snippet {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .code-block {
+        background-color: #fff;
+        color: #b4690e;
+        font-size: 90%;
+      }
+      .black-block {
+        color: #000000;
+      }
+      .italic-text {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <h1 id="coding-title"></h1>
+    <div>
+      <h2>Instructions</h2>
+      <div id="coding-instructions"></div>
+    </div>
+    <div>
+      <h2>Test(s)</h2>
+      <div id="coding-tests"></div>
+    </div>
+    <div>
+      <h2>Solution(s)</h2>
+      <div id="coding-solutions"></div>
+    </div>
+
+    <script>
+      const quizData = {"title": "009 Set Has Unique Chars (  Interview Question)", "hasInstructions": true, "hasTests": true, "hasSolutions": true, "instructions": "<p>Write a Java program to determine if a given string contains all unique characters or not. <br><br>Implement a method called <code><strong>hasUniqueChars</strong></code> that takes a single argument, a string, and returns a boolean value. <br><br>The method should return <code><strong>true</strong></code> if all characters in the input string are unique and <code><strong>false</strong></code> if there are any duplicate characters.<br><br>Method signature: <code><strong>public static boolean hasUniqueChars(String string)<br></strong></code></p><p>Input:</p><ul><li><p>A string <code><strong>string</strong></code></p></li></ul><p><br></p><p>Output:</p><ul><li><p>A boolean value indicating whether the input string contains all unique characters or not.</p><p><br></p></li></ul><p>Example:</p><p><br></p><pre class=\"prettyprint linenums\">System.out.println(hasUniqueChars(\"abcdefg\")); // should return true\nSystem.out.println(hasUniqueChars(\"hello\")); // should return false\nSystem.out.println(hasUniqueChars(\"\")); // should return true\nSystem.out.println(hasUniqueChars(\"0123456789\")); // should return true\nSystem.out.println(hasUniqueChars(\"abacadaeaf\")); // should return false</pre><p><br></p><p><br></p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-04-21_15-36-35-50014ec5b70d6e7c99ce32bb3c518b20.png\">", "tests": [{"file_name": "Evaluate.java", "content": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\nimport org.junit.jupiter.api.BeforeEach;\n\nimport java.util.*;\n\n\npublic class Evaluate {      \n   \n    @BeforeEach\n    public void runMain() {\n        Main.main(new String[0]);\n    }\n   \n    // Test a string with unique characters\n    @Test\n    public void testUniqueChars() {\n        String myString = \"abcdef\";\n        boolean result = Main.hasUniqueChars(myString);\n        assertEquals(true, result);\n    }\n\n    // Test a string with duplicate characters\n    @Test\n    public void testDuplicateChars() {\n        String myString = \"aabbcc\";\n        boolean result = Main.hasUniqueChars(myString);\n        assertEquals(false, result);\n    }\n\n    // Test an empty string\n    @Test\n    public void testEmptyString() {\n        String myString = \"\";\n        boolean result = Main.hasUniqueChars(myString);\n        assertEquals(true, result);\n    }\n\n    // Test a string with single character\n    @Test\n    public void testSingleChar() {\n        String myString = \"a\";\n        boolean result = Main.hasUniqueChars(myString);\n        assertEquals(true, result);\n    }\n\n    // Test a string with case-sensitive characters\n    @Test\n    public void testCaseSensitive() {\n        String myString = \"aA\";\n        boolean result = Main.hasUniqueChars(myString);\n        assertEquals(true, result);\n    }\n    \n}\n\n"}], "solutions": [{"file_name": "Main.java", "content": "import java.util.HashSet;\nimport java.util.Set;\n\n\npublic class Main {\n\n    public static boolean hasUniqueChars(String string) {\n        Set<Character> charSet = new HashSet<>();\n\n        for (char ch : string.toCharArray()) {\n            if (charSet.contains(ch)) {\n                return false;\n            }\n            charSet.add(ch);\n        }\n\n        return true;\n    }\n\n\n    public static void main(String[] args) {\n        System.out.println(hasUniqueChars(\"abcdefg\")); // should return true\n        System.out.println(hasUniqueChars(\"hello\")); // should return false\n        System.out.println(hasUniqueChars(\"\")); // should return true\n        System.out.println(hasUniqueChars(\"0123456789\")); // should return true\n        System.out.println(hasUniqueChars(\"abacadaeaf\")); // should return false\n\n        /*\n            EXPECTED OUTPUT:\n            ----------------\n            true\n            false\n            true\n            true\n            false\n        */\n        \n    }\n    \n}\n"}]};
+
+      function renderCodeList(rootElement, codeList, className, titlePrefix) {
+        for (var i = 0; i < codeList.length; i++) {
+          var elem = codeList[i];
+          var jsElem = document.createElement("div");
+          jsElem.className = className;
+          var jsElemTitle = document.createElement("h3");
+          jsElemTitle.innerHTML = titlePrefix + " " + (i + 1);
+          var jsElemBody = document.createElement("code");
+          jsElemBody.className = "code-block black-block";
+          jsElemBody.innerHTML = "<pre>" + elem.content + "</pre>";
+          jsElem.appendChild(jsElemTitle);
+          jsElem.appendChild(jsElemBody);
+          rootElement.appendChild(jsElem);
+        }
+      }
+      
+      function main() {
+        // display the assignment
+        var codingTitle = document.getElementById("coding-title");
+        codingTitle.innerHTML = quizData.title;
+        
+        var codingInstructions = document.getElementById("coding-instructions");
+        if (quizData.hasInstructions) {
+          codingInstructions.innerHTML = quizData.instructions;
+        } else {
+          codingInstructions.innerHTML = "<span class=\"italic-text\">" + quizData.instructions
+            + "</span>";
+        }
+
+        // display the test(s)
+        var codingTests = document.getElementById("coding-tests");
+        if (!quizData.hasTests) {
+          codingTests.innerHTML = "<span class=\"italic-text\">" + quizData.tests + "</span>";
+        } else {
+          renderCodeList(codingTests, quizData.tests, "coding-test", "Test");
+        }
+        
+
+        // display the solution(s)
+        var codingSolutions = document.getElementById("coding-solutions");
+        if (!quizData.hasSolutions) {
+          codingSolutions.innerHTML = "<span class=\"italic-text\">" + quizData.solutions + "</span>";
+        } else {
+          renderCodeList(codingSolutions, quizData.solutions, "coding-solution", "Solution");
+        }
+      }
+    </script>
+  </body>
+</html>

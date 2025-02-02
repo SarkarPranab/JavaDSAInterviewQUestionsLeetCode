@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Assignment</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p, ul, ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .code-snippet {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .code-block {
+        background-color: #fff;
+        color: #b4690e;
+        font-size: 90%;
+      }
+      .black-block {
+        color: #000000;
+      }
+      .italic-text {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <h1 id="coding-title"></h1>
+    <div>
+      <h2>Instructions</h2>
+      <div id="coding-instructions"></div>
+    </div>
+    <div>
+      <h2>Test(s)</h2>
+      <div id="coding-tests"></div>
+    </div>
+    <div>
+      <h2>Solution(s)</h2>
+      <div id="coding-solutions"></div>
+    </div>
+
+    <script>
+      const quizData = {"title": "002 Stack Pop for a Stack That Uses an ArrayList (  Interview Question)", "hasInstructions": true, "hasTests": true, "hasSolutions": true, "instructions": "<p>Add a method to <code><strong>pop</strong></code> a value from the Stack implementation that we began in the last Coding Exercise.<br><br>Return type: <code><strong>T</strong></code><br><br><strong>Remember:</strong> This Stack implementation uses an ArrayList instead of a Linked List.</p><p><br></p><p><br></p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-05-03_15-22-37-c8a531a68e9609407bc53e7543404cb5.png\"><p><br></p>", "tests": [{"file_name": "Evaluate.java", "content": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\nimport org.junit.jupiter.api.BeforeEach;\n\n\npublic class Evaluate {      \n    \n    @BeforeEach\n    public void runMain() {\n        Main.main(new String[0]);\n    }\n    \n     @Test\n    public void testPopFromEmptyStack() {\n        // Create an empty stack\n        Stack<Integer> stack = new Stack<>();\n\n        // Pop an element\n        Integer poppedValue = stack.pop();\n\n        // Should return null and size should be 0\n        assertNull(poppedValue);\n        assertEquals(0, stack.size());\n    }\n\n    @Test\n    public void testPopFromSingleElementStack() {\n        // Create a single-element stack\n        Stack<Integer> stack = new Stack<>();\n        stack.push(1);\n\n        // Pop an element\n        Integer poppedValue = stack.pop();\n\n        // Should return 1 and size should be 0\n        assertEquals(Integer.valueOf(1), poppedValue);\n        assertEquals(0, stack.size());\n    }\n\n    @Test\n    public void testPopFromMultiElementStack() {\n        // Create a multi-element stack\n        Stack<Integer> stack = new Stack<>();\n        stack.push(1);\n        stack.push(2);\n        stack.push(3);\n\n        // Pop an element\n        Integer poppedValue = stack.pop();\n\n        // Should return 3 and size should be 2\n        assertEquals(Integer.valueOf(3), poppedValue);\n        assertEquals(2, stack.size());\n\n        // Check the last element after popping\n        assertEquals(Integer.valueOf(2), stack.peek());\n    }\n    \n}\n\n"}], "solutions": [{"file_name": "Stack.java", "content": "import java.util.ArrayList;\n\npublic class Stack<T> {\n    \n    private ArrayList<T> stackList = new ArrayList<>();  \n    \n    public ArrayList<T> getStackList() {\n        return stackList;\n    }\n    \n    public void printStack() {\n        for (int i = stackList.size()-1; i >= 0; i--) {\n            System.out.println(stackList.get(i));\n        }\n    }\n    \n    public boolean isEmpty() {\n        return stackList.size() == 0;\n    }\n    \n    public T peek() {\n        if (isEmpty()) {\n            return null;\n        } else {\n            return stackList.get(stackList.size() - 1);\n        }\n    }\n    \n    public int size() {\n        return stackList.size();\n    }\n    \n    public void push(T value) {\n        stackList.add(value);\n    }\n    \n    public T pop() {\n        if (isEmpty()) return null;\n        return stackList.remove(stackList.size() - 1);\n    }\n}"}, {"file_name": "Main.java", "content": "public class Main {\n\n    public static void main(String[] args) {\n\n        Stack myStack = new Stack();\n        myStack.push(1);\n        myStack.push(2);\n        myStack.push(3);\n        \n        System.out.println(\"Stack before pop():\");\n        myStack.printStack();\n        \n        System.out.println(\"\\nPopped node:\");\n        System.out.println(myStack.pop());\n        \n        System.out.println(\"\\nStack after pop():\");\n        myStack.printStack();\n\n        \n        /*\n            EXPECTED OUTPUT:\n            Stack before pop():\n            3\n            2\n            1\n            \n            Popped node:\n            3\n            \n            Stack after pop():\n            2\n            1\n \n\n        */\n\n    }\n\n}"}]};
+
+      function renderCodeList(rootElement, codeList, className, titlePrefix) {
+        for (var i = 0; i < codeList.length; i++) {
+          var elem = codeList[i];
+          var jsElem = document.createElement("div");
+          jsElem.className = className;
+          var jsElemTitle = document.createElement("h3");
+          jsElemTitle.innerHTML = titlePrefix + " " + (i + 1);
+          var jsElemBody = document.createElement("code");
+          jsElemBody.className = "code-block black-block";
+          jsElemBody.innerHTML = "<pre>" + elem.content + "</pre>";
+          jsElem.appendChild(jsElemTitle);
+          jsElem.appendChild(jsElemBody);
+          rootElement.appendChild(jsElem);
+        }
+      }
+      
+      function main() {
+        // display the assignment
+        var codingTitle = document.getElementById("coding-title");
+        codingTitle.innerHTML = quizData.title;
+        
+        var codingInstructions = document.getElementById("coding-instructions");
+        if (quizData.hasInstructions) {
+          codingInstructions.innerHTML = quizData.instructions;
+        } else {
+          codingInstructions.innerHTML = "<span class=\"italic-text\">" + quizData.instructions
+            + "</span>";
+        }
+
+        // display the test(s)
+        var codingTests = document.getElementById("coding-tests");
+        if (!quizData.hasTests) {
+          codingTests.innerHTML = "<span class=\"italic-text\">" + quizData.tests + "</span>";
+        } else {
+          renderCodeList(codingTests, quizData.tests, "coding-test", "Test");
+        }
+        
+
+        // display the solution(s)
+        var codingSolutions = document.getElementById("coding-solutions");
+        if (!quizData.hasSolutions) {
+          codingSolutions.innerHTML = "<span class=\"italic-text\">" + quizData.solutions + "</span>";
+        } else {
+          renderCodeList(codingSolutions, quizData.solutions, "coding-solution", "Solution");
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Assignment</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p, ul, ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .code-snippet {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .code-block {
+        background-color: #fff;
+        color: #b4690e;
+        font-size: 90%;
+      }
+      .black-block {
+        color: #000000;
+      }
+      .italic-text {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <h1 id="coding-title"></h1>
+    <div>
+      <h2>Instructions</h2>
+      <div id="coding-instructions"></div>
+    </div>
+    <div>
+      <h2>Test(s)</h2>
+      <div id="coding-tests"></div>
+    </div>
+    <div>
+      <h2>Solution(s)</h2>
+      <div id="coding-solutions"></div>
+    </div>
+
+    <script>
+      const quizData = {"title": "006 Queue Using Stacks Enqueue (  Interview Question)", "hasInstructions": true, "hasTests": true, "hasSolutions": true, "instructions": "<p>Implement the Enqueue Method for a Queue using Two Stacks<br><br><strong>Description:</strong><br><br>In this assignment, you are tasked with implementing the <code><strong>enqueue</strong></code> method for a custom queue class called <code><strong>MyQueue</strong></code> using two stacks, <code><strong>stack1</strong></code> and <code><strong>stack2</strong></code>. <br><br>A queue is a data structure that follows the First-In-First-Out (FIFO) principle, meaning that the first element added to the queue will be the first one to be removed. Your implementation must maintain the FIFO order of elements in the queue using two stacks.<br><br>Your task is to implement the following method:</p><p><br></p><pre class=\"prettyprint linenums\">public void enqueue(int value)</pre><p><br></p><p>This method takes an integer value as input and adds it to the queue.<br></p><p><strong>Note:</strong> You are not allowed to use any data structures other than the provided stacks (<code><strong>stack1</strong></code> and <code><strong>stack2</strong></code>).</p><p><br></p><p><br></p><p><strong>Example:</strong></p><p><br></p><pre class=\"prettyprint linenums\">MyQueue q = new MyQueue();\nq.enqueue(1);\nq.enqueue(2);\nq.enqueue(3);</pre><p><br></p><p>After these operations, the queue should have the following elements in order: 1, 2, 3.</p><p><br></p><p><br></p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-04-20_19-28-54-bc808fd77240f444d52d26592277576b.png\">", "tests": [{"file_name": "Evaluate.java", "content": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\nimport org.junit.jupiter.api.BeforeEach;\n\nimport java.util.*;\n\n\npublic class Evaluate {      \n   \n    @BeforeEach\n    public void runMain() {\n        Main.main(new String[0]);\n    }\n   \n    // Test enqueue on an empty queue\n    @Test\n    public void testEnqueueEmptyQueue() {\n        MyQueue queue = new MyQueue();\n        assertTrue(queue.isEmpty());\n        queue.enqueue(1);\n        assertFalse(queue.isEmpty());\n        assertEquals(1, queue.peek());\n    }\n\n    // Test enqueue of a single element\n    @Test\n    public void testEnqueueSingleElement() {\n        MyQueue queue = new MyQueue();\n        queue.enqueue(1);\n        assertEquals(1, queue.peek());\n    }\n\n    // Test enqueue of multiple elements to ensure order is maintained\n    @Test\n    public void testEnqueueMultipleElements() {\n        MyQueue queue = new MyQueue();\n        queue.enqueue(1);\n        queue.enqueue(2);\n        queue.enqueue(3);\n        assertEquals(1, queue.peek());\n    }\n\n    // Test the structure after multiple enqueue operations to verify the internal state\n    @Test\n    public void testInternalStructureAfterMultipleEnqueues() {\n        MyQueue queue = new MyQueue();\n        queue.enqueue(1);\n        queue.enqueue(2);\n        queue.enqueue(3);\n        queue.enqueue(4);\n        queue.enqueue(5);\n        assertEquals(1, queue.peek());\n    }\n\n    // Test consecutive enqueues to verify stability of queue operations\n    @Test\n    public void testConsecutiveEnqueues() {\n        MyQueue queue = new MyQueue();\n        for (int i = 1; i <= 10; i++) {\n            queue.enqueue(i);\n        }\n        assertEquals(1, queue.peek());\n    }\n\n    // Test enqueue with a large number of elements\n    @Test\n    public void testEnqueueLargeNumberOfElements() {\n        MyQueue queue = new MyQueue();\n        for (int i = 1; i <= 1000; i++) {\n            queue.enqueue(i);\n        }\n        assertEquals(1, queue.peek());\n    }\n\n    // Test enqueue of diverse elements (including zeros and negatives)\n    @Test\n    public void testEnqueueDiverseElements() {\n        MyQueue queue = new MyQueue();\n        queue.enqueue(-1);\n        queue.enqueue(0);\n        queue.enqueue(999);\n        assertEquals(-1, queue.peek());\n    }\n    \n}\n\n"}], "solutions": [{"file_name": "MyQueue.java", "content": "import java.util.Stack;\n\npublic class MyQueue {\n    private Stack<Integer> stack1;\n    private Stack<Integer> stack2;\n\n    public MyQueue() {\n        stack1 = new Stack<>();\n        stack2 = new Stack<>();\n    }\n\n    public void enqueue(int value) {\n        while (!stack1.isEmpty()) {\n            stack2.push(stack1.pop());\n        }\n        stack1.push(value);\n        while (!stack2.isEmpty()) {\n            stack1.push(stack2.pop());\n        }\n    }\n\n    public int peek() {\n        return stack1.peek();\n    }\n\n    public boolean isEmpty() {\n        return stack1.isEmpty();\n    }\n}\n"}, {"file_name": "Main.java", "content": "public class Main {\n\n    public static void main(String[] args) {\n\n        // Create a new queue\n        MyQueue q = new MyQueue();\n\n        // Enqueue some values\n        q.enqueue(1);\n        q.enqueue(2);\n        q.enqueue(3);\n\n        // Output the front of the queue\n        System.out.println(\"Front of the queue: \" + q.peek());\n\n        // Check if the queue is empty\n        System.out.println(\"Is the queue empty? \" + q.isEmpty());\n\n\n        /*\n            EXPECTED OUTPUT:\n            ----------------\n            Front of the queue: 1\n            Is the queue empty? false\n\n        */\n\n    }\n\n}"}]};
+
+      function renderCodeList(rootElement, codeList, className, titlePrefix) {
+        for (var i = 0; i < codeList.length; i++) {
+          var elem = codeList[i];
+          var jsElem = document.createElement("div");
+          jsElem.className = className;
+          var jsElemTitle = document.createElement("h3");
+          jsElemTitle.innerHTML = titlePrefix + " " + (i + 1);
+          var jsElemBody = document.createElement("code");
+          jsElemBody.className = "code-block black-block";
+          jsElemBody.innerHTML = "<pre>" + elem.content + "</pre>";
+          jsElem.appendChild(jsElemTitle);
+          jsElem.appendChild(jsElemBody);
+          rootElement.appendChild(jsElem);
+        }
+      }
+      
+      function main() {
+        // display the assignment
+        var codingTitle = document.getElementById("coding-title");
+        codingTitle.innerHTML = quizData.title;
+        
+        var codingInstructions = document.getElementById("coding-instructions");
+        if (quizData.hasInstructions) {
+          codingInstructions.innerHTML = quizData.instructions;
+        } else {
+          codingInstructions.innerHTML = "<span class=\"italic-text\">" + quizData.instructions
+            + "</span>";
+        }
+
+        // display the test(s)
+        var codingTests = document.getElementById("coding-tests");
+        if (!quizData.hasTests) {
+          codingTests.innerHTML = "<span class=\"italic-text\">" + quizData.tests + "</span>";
+        } else {
+          renderCodeList(codingTests, quizData.tests, "coding-test", "Test");
+        }
+        
+
+        // display the solution(s)
+        var codingSolutions = document.getElementById("coding-solutions");
+        if (!quizData.hasSolutions) {
+          codingSolutions.innerHTML = "<span class=\"italic-text\">" + quizData.solutions + "</span>";
+        } else {
+          renderCodeList(codingSolutions, quizData.solutions, "coding-solution", "Solution");
+        }
+      }
+    </script>
+  </body>
+</html>
