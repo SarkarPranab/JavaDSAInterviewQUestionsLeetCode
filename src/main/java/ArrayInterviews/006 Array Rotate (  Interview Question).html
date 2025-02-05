@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Assignment</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p, ul, ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .code-snippet {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .code-block {
+        background-color: #fff;
+        color: #b4690e;
+        font-size: 90%;
+      }
+      .black-block {
+        color: #000000;
+      }
+      .italic-text {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <h1 id="coding-title"></h1>
+    <div>
+      <h2>Instructions</h2>
+      <div id="coding-instructions"></div>
+    </div>
+    <div>
+      <h2>Test(s)</h2>
+      <div id="coding-tests"></div>
+    </div>
+    <div>
+      <h2>Solution(s)</h2>
+      <div id="coding-solutions"></div>
+    </div>
+
+    <script>
+      const quizData = {"title": "006 Array Rotate (  Interview Question)", "hasInstructions": true, "hasTests": true, "hasSolutions": true, "instructions": "<p>You are tasked with implementing a method, <code><strong>rotate</strong></code>, that rotates an array to the right by <code><strong>k</strong></code> steps, where <code><strong>k</strong></code> is a non-negative integer.</p><p><br></p><p><strong>Method Signature</strong></p><pre class=\"prettyprint linenums\">public static void rotate(int[] nums, int k)</pre><p><br></p><p>This method takes as input an array of integers <code><strong>nums</strong></code> and a non-negative integer <code><strong>k</strong></code>, and rotates the array in-place.</p><p><br></p><p><strong>Input</strong></p><ul><li><p>An array of integers <code><strong>nums</strong></code> (you can assume the array is not empty)</p></li><li><p>A non-negative integer <code><strong>k</strong></code>, which represents the number of steps the array should be rotated.</p></li></ul><p><br></p><p><strong>Output </strong><br>This function does not return anything. It modifies the input array <code><strong>nums</strong></code> in-place to rotate it to the right by <code><strong>k</strong></code> steps.</p><p><br></p><p><strong>Example</strong> </p><p>For example, if the input array is {1, 2, 3, 4, 5, 6, 7} and <code><strong>k</strong></code> = 3, the method should rotate the array to become {5, 6, 7, 1, 2, 3, 4}.</p><p><br></p><p><strong>Note</strong></p><ul><li><p>Rotation is performed in steps. For each step, the last element of the array is moved to the front, and all other elements are moved one step to the right.</p></li><li><p>The number of rotations is equal to <code><strong>k mod n</strong></code>, where <code><strong>n</strong></code> is the length of the array. This is because after <code><strong>n</strong></code> rotations, the array would return to its original state.</p></li><li><p>The rotation should be performed in-place, i.e., without making a copy of the original array (except for temporary variables).</p></li><li><p>Your solution should run efficiently, ideally with a linear time complexity and constant space complexity.</p></li></ul><p><br></p><p><br></p><p><br></p><p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-07-23_22-36-24-1471862794b00696d4515bfbc0872369.png\"></p><p><br></p><p><br></p><p><br></p>", "tests": [{"file_name": "Evaluate.java", "content": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\nimport org.junit.jupiter.api.BeforeEach;\n\nimport java.util.Arrays;\n\n\npublic class Evaluate {      \n   \n    @BeforeEach\n    public void runMain() {\n        Main.main(new String[0]);\n    }\n\n  // Test with mixed positive and negative numbers\n  @Test\n  public void testRotateMixedNumbers() {\n    int[] input = {-1, 2, 3, -4, 5};\n    int k = 2;\n    int[] expected = {-4, 5, -1, 2, 3};\n    Main.rotate(input, k);\n    assertArrayEquals(expected, input);\n  }\n\n  // Test rotating by array length\n  @Test\n  public void testRotateByArrayLength() {\n    int[] input = {1, 2, 3, 4, 5, 6, 7};\n    int k = 7; // same as array length\n    int[] expected = {1, 2, 3, 4, 5, 6, 7};\n    Main.rotate(input, k);\n    assertArrayEquals(expected, input);\n  }\n\n  // Test with all positive numbers\n  @Test\n  public void testRotateAllPositive() {\n    int[] input = {1, 2, 3, 4, 5, 6, 7};\n    int k = 3;\n    int[] expected = {5, 6, 7, 1, 2, 3, 4};\n    Main.rotate(input, k);\n    assertArrayEquals(expected, input);\n  }\n\n  // Test with a single number\n  @Test\n  public void testRotateSingleNumber() {\n    int[] input = {5};\n    int k = 3;\n    int[] expected = {5};\n    Main.rotate(input, k);\n    assertArrayEquals(expected, input);\n  }\n  \n}\n\n"}], "solutions": [{"file_name": "Main.java", "content": "import java.util.Arrays;\n\npublic class Main {\n    \n    public static void rotate(int[] nums, int k) {\n        k = k % nums.length;\n\n        // Reverse the first part\n        for (int start = 0, end = nums.length - k - 1; start < end; start++, end--) {\n            int temp = nums[start];\n            nums[start] = nums[end];\n            nums[end] = temp;\n        }\n\n        // Reverse the second part\n        for (int start = nums.length - k, end = nums.length - 1; start < end; start++, end--) {\n            int temp = nums[start];\n            nums[start] = nums[end];\n            nums[end] = temp;\n        }\n\n        // Reverse the whole array\n        for (int start = 0, end = nums.length - 1; start < end; start++, end--) {\n            int temp = nums[start];\n            nums[start] = nums[end];\n            nums[end] = temp;\n        }\n    }\n\n\n\n    public static void main(String[] args) {\n        int[] nums1 = {1, 2, 3, 4, 5, 6, 7};\n        int k1 = 3;\n        rotate(nums1, k1);\n        System.out.println(\"Test case 1: Rotated array: \" + Arrays.toString(nums1));  // prints \"Rotated array: [5, 6, 7, 1, 2, 3, 4]\"\n\n        int[] nums2 = {-1, -100, 3, 99};\n        int k2 = 2;\n        rotate(nums2, k2);\n        System.out.println(\"Test case 2: Rotated array: \" + Arrays.toString(nums2));  // prints \"Rotated array: [3, 99, -1, -100]\"\n\n        int[] nums3 = {1, 2};\n        int k3 = 3;\n        rotate(nums3, k3);\n        System.out.println(\"Test case 3: Rotated array: \" + Arrays.toString(nums3));  // prints \"Rotated array: [2, 1]\"\n\n        int[] nums4 = {1};\n        int k4 = 0;\n        rotate(nums4, k4);\n        System.out.println(\"Test case 4: Rotated array: \" + Arrays.toString(nums4));  // prints \"Rotated array: [1]\"\n\n        int[] nums5 = {1, 2, 3, 4, 5, 6};\n        int k5 = 6;\n        rotate(nums5, k5);\n        System.out.println(\"Test case 5: Rotated array: \" + Arrays.toString(nums5));  // prints \"Rotated array: [1, 2, 3, 4, 5, 6]\"\n        \n        /*\n            EXPECTED OUTPUT:\n            ----------------\n            Test case 1: Rotated array: [5, 6, 7, 1, 2, 3, 4]\n            Test case 2: Rotated array: [3, 99, -1, -100]\n            Test case 3: Rotated array: [2, 1]\n            Test case 4: Rotated array: [1]\n            Test case 5: Rotated array: [1, 2, 3, 4, 5, 6]\n        */\n        \n    }\n\n}"}]};
+
+      function renderCodeList(rootElement, codeList, className, titlePrefix) {
+        for (var i = 0; i < codeList.length; i++) {
+          var elem = codeList[i];
+          var jsElem = document.createElement("div");
+          jsElem.className = className;
+          var jsElemTitle = document.createElement("h3");
+          jsElemTitle.innerHTML = titlePrefix + " " + (i + 1);
+          var jsElemBody = document.createElement("code");
+          jsElemBody.className = "code-block black-block";
+          jsElemBody.innerHTML = "<pre>" + elem.content + "</pre>";
+          jsElem.appendChild(jsElemTitle);
+          jsElem.appendChild(jsElemBody);
+          rootElement.appendChild(jsElem);
+        }
+      }
+      
+      function main() {
+        // display the assignment
+        var codingTitle = document.getElementById("coding-title");
+        codingTitle.innerHTML = quizData.title;
+        
+        var codingInstructions = document.getElementById("coding-instructions");
+        if (quizData.hasInstructions) {
+          codingInstructions.innerHTML = quizData.instructions;
+        } else {
+          codingInstructions.innerHTML = "<span class=\"italic-text\">" + quizData.instructions
+            + "</span>";
+        }
+
+        // display the test(s)
+        var codingTests = document.getElementById("coding-tests");
+        if (!quizData.hasTests) {
+          codingTests.innerHTML = "<span class=\"italic-text\">" + quizData.tests + "</span>";
+        } else {
+          renderCodeList(codingTests, quizData.tests, "coding-test", "Test");
+        }
+        
+
+        // display the solution(s)
+        var codingSolutions = document.getElementById("coding-solutions");
+        if (!quizData.hasSolutions) {
+          codingSolutions.innerHTML = "<span class=\"italic-text\">" + quizData.solutions + "</span>";
+        } else {
+          renderCodeList(codingSolutions, quizData.solutions, "coding-solution", "Solution");
+        }
+      }
+    </script>
+  </body>
+</html>

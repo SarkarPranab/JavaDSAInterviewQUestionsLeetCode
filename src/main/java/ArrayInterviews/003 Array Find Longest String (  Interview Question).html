@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Assignment</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p, ul, ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .code-snippet {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .code-block {
+        background-color: #fff;
+        color: #b4690e;
+        font-size: 90%;
+      }
+      .black-block {
+        color: #000000;
+      }
+      .italic-text {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <h1 id="coding-title"></h1>
+    <div>
+      <h2>Instructions</h2>
+      <div id="coding-instructions"></div>
+    </div>
+    <div>
+      <h2>Test(s)</h2>
+      <div id="coding-tests"></div>
+    </div>
+    <div>
+      <h2>Solution(s)</h2>
+      <div id="coding-solutions"></div>
+    </div>
+
+    <script>
+      const quizData = {"title": "003 Array Find Longest String (  Interview Question)", "hasInstructions": true, "hasTests": true, "hasSolutions": true, "instructions": "<p>Write a method that, given an array of strings, finds and returns the longest string in the array. <br><br>If there are multiple strings with the same maximum length, return the first one encountered.</p><p><br></p><p><strong>Method Signature</strong></p><pre class=\"prettyprint linenums\">public static String findLongestString(String[] stringList)</pre><p><br></p><p>This method takes an array of strings <code><strong>stringList</strong></code> as input and returns a string.</p><p><br></p><p><strong>Input</strong></p><ul><li><p>An array of strings <code><strong>stringList</strong></code> </p><p><br></p><p><br></p></li></ul><p><strong>Output</strong></p><ul><li><p>Returns a string that is the longest string in the input array. If multiple strings have the same length, it returns the first string encountered.</p></li></ul><p><br></p><p><strong>Example</strong></p><p>For example, if the input array is <code><strong>{\"apple\", \"banana\", \"kiwi\", \"pear\"}</strong></code>, the method should return <code><strong>\"banana\"</strong></code> since <code><strong>\"banana\"</strong></code> is the longest string in the array.</p><p><br></p><p><strong>Additional Notes</strong></p><p>The implementation needs to consider the case where the string is empty <code><strong>\"\"</strong></code> as in test case 5. In this case, the empty string has the least length. If all the strings in the array are of the same length, the method will return the first string in the array.</p><p><br></p><p>Please ensure your solution handles these cases correctly.</p><p><br></p><p><br></p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-07-23_22-36-13-0fbe1f60d1dbd33561c7568f9f01df13.png\"><p><br></p><p><br></p>", "tests": [{"file_name": "Evaluate.java", "content": "import org.junit.jupiter.api.Test;\nimport static org.junit.jupiter.api.Assertions.*;\nimport org.junit.jupiter.api.BeforeEach;\n\nimport java.util.Arrays;\n\n\npublic class Evaluate {      \n   \n    @BeforeEach\n    public void runMain() {\n        Main.main(new String[0]);\n    }\n\n  // Test with an array of strings of varying lengths\n  @Test\n  public void testFindLongestStringVaryingLengths() {\n    String[] stringList = {\"apple\", \"banana\", \"cherry\"};\n    String expected = \"banana\";\n    String actual = Main.findLongestString(stringList);\n    assertEquals(expected, actual);\n  }\n\n  // Test with an array of strings with the same length\n  @Test\n  public void testFindLongestStringSameLength() {\n    String[] stringList = {\"cat\", \"dog\", \"bat\"};\n    String expected = \"cat\"; // First longest string\n    String actual = Main.findLongestString(stringList);\n    assertEquals(expected, actual);\n  }\n\n  // Test with an empty array\n  @Test\n  public void testFindLongestStringEmptyArray() {\n    String[] stringList = {};\n    String expected = \"\";\n    String actual = Main.findLongestString(stringList);\n    assertEquals(expected, actual);\n  }\n\n  // Test with an array containing a single string\n  @Test\n  public void testFindLongestStringSingleElement() {\n    String[] stringList = {\"hello\"};\n    String expected = \"hello\";\n    String actual = Main.findLongestString(stringList);\n    assertEquals(expected, actual);\n  }\n\n  // Test with an array containing empty strings\n  @Test\n  public void testFindLongestStringEmptyStrings() {\n    String[] stringList = {\"\", \"\", \"\"};\n    String expected = \"\"; // As all are empty strings\n    String actual = Main.findLongestString(stringList);\n    assertEquals(expected, actual);\n  }\n  \n}\n\n"}], "solutions": [{"file_name": "Main.java", "content": "public class Main {\n\n    public static String findLongestString(String[] stringList) {\n        String longestString = \"\";\n        for (String str : stringList) {\n            if (str.length() > longestString.length()) {\n                longestString = str;\n            }\n        }\n        return longestString;\n    }\n    \n    \n\n\n    public static void main(String[] args) {\n\n        String[] stringList1 = {\"apple\", \"banana\", \"kiwi\", \"pear\"};\n        String longest1 = findLongestString(stringList1);\n        System.out.println(\"Test case 1: Longest string: \" + longest1);  // prints \"banana\"\n        \n        String[] stringList2 = {\"cat\", \"giraffe\", \"elephant\", \"hippopotamus\"};\n        String longest2 = findLongestString(stringList2);\n        System.out.println(\"Test case 2: Longest string: \" + longest2);  // prints \"hippopotamus\"\n\n        String[] stringList3 = {\"sun\", \"moon\", \"planet\", \"universe\"};\n        String longest3 = findLongestString(stringList3);\n        System.out.println(\"Test case 3: Longest string: \" + longest3);  // prints \"universe\"\n        \n        String[] stringList4 = {\"java\", \"python\", \"javascript\", \"c\"};\n        String longest4 = findLongestString(stringList4);\n        System.out.println(\"Test case 4: Longest string: \" + longest4);  // prints \"javascript\"\n\n        String[] stringList5 = {\"\", \"a\", \"aa\", \"aaa\"};\n        String longest5 = findLongestString(stringList5);\n        System.out.println(\"Test case 5: Longest string: \" + longest5);  // prints \"aaa\"\n        \n        /*\n            EXPECTED OUTPUT:\n            ----------------\n            Test case 1: Longest string: banana\n            Test case 2: Longest string: hippopotamus\n            Test case 3: Longest string: universe\n            Test case 4: Longest string: javascript\n            Test case 5: Longest string: aaa\n        */\n        \n    }\n\n}"}]};
+
+      function renderCodeList(rootElement, codeList, className, titlePrefix) {
+        for (var i = 0; i < codeList.length; i++) {
+          var elem = codeList[i];
+          var jsElem = document.createElement("div");
+          jsElem.className = className;
+          var jsElemTitle = document.createElement("h3");
+          jsElemTitle.innerHTML = titlePrefix + " " + (i + 1);
+          var jsElemBody = document.createElement("code");
+          jsElemBody.className = "code-block black-block";
+          jsElemBody.innerHTML = "<pre>" + elem.content + "</pre>";
+          jsElem.appendChild(jsElemTitle);
+          jsElem.appendChild(jsElemBody);
+          rootElement.appendChild(jsElem);
+        }
+      }
+      
+      function main() {
+        // display the assignment
+        var codingTitle = document.getElementById("coding-title");
+        codingTitle.innerHTML = quizData.title;
+        
+        var codingInstructions = document.getElementById("coding-instructions");
+        if (quizData.hasInstructions) {
+          codingInstructions.innerHTML = quizData.instructions;
+        } else {
+          codingInstructions.innerHTML = "<span class=\"italic-text\">" + quizData.instructions
+            + "</span>";
+        }
+
+        // display the test(s)
+        var codingTests = document.getElementById("coding-tests");
+        if (!quizData.hasTests) {
+          codingTests.innerHTML = "<span class=\"italic-text\">" + quizData.tests + "</span>";
+        } else {
+          renderCodeList(codingTests, quizData.tests, "coding-test", "Test");
+        }
+        
+
+        // display the solution(s)
+        var codingSolutions = document.getElementById("coding-solutions");
+        if (!quizData.hasSolutions) {
+          codingSolutions.innerHTML = "<span class=\"italic-text\">" + quizData.solutions + "</span>";
+        } else {
+          renderCodeList(codingSolutions, quizData.solutions, "coding-solution", "Solution");
+        }
+      }
+    </script>
+  </body>
+</html>
